@@ -123,8 +123,7 @@ public class GameEngineImpl implements GameEngine {
 
 	@Override
 	public boolean removePlayer(Player player) {
-		playerList.remove(player);
-		return false;
+		return playerList.remove(player);
 	}
 
 	@Override
