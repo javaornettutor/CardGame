@@ -90,6 +90,7 @@ public class GameEngineImpl implements GameEngine {
 		
 		for(GameEngineCallback gameEngineCallback : gameEngineCallbackList) {
 			gameEngineCallback.houseBustCard(nextCard, this);
+			gameEngineCallback.houseResult(score, this);
 		}
 		
 		for (Player player : playerList) {
