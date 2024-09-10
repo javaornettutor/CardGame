@@ -1,0 +1,102 @@
+﻿@model Room_Booking.ViewModel.BookingVM
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit Booking</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+    <h4>Booking</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    
+    <div class="row">
+        <div class="col-sm">
+            @Html.LabelFor(model => model.roomId, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-sm">
+            @Html.DropDownListFor(model => model.roomId, Model.RoomSelectListItem, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.roomId, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            @Html.LabelFor(model => model.customerId, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-sm">
+            @Html.DropDownListFor(model => model.customerId, Model.CustomerSelectListItem, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.customerId, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            @Html.LabelFor(model => model.status, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-sm">
+            @Html.EditorFor(model => model.status)
+            @Html.ValidationMessageFor(model => model.status, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            @Html.LabelFor(model => model.CheckInDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-sm">
+            @Html.EditorFor(model => model.CheckInDate, new { htmlAttributes = new { @class = "form-control", @id = "ckInDateTb" } })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            @Html.LabelFor(model => model.CheckOutDate, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-sm">
+            @Html.EditorFor(model => model.CheckOutDate, new { htmlAttributes = new { @class = "form-control", @id = "ckOutDateTb" } })
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-sm-12">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+  </div>
+}
+
+
+    @Html.ActionLink("Back to List", "Index")
+
+    <script>
+        var picker = new Pikaday(
+            {
+                field: document.getElementById('ckInDateTb'),
+                firstDay: 1,
+                minDate: new Date('2018-12-01'),
+                maxDate: new Date('2020-12-31'),
+                yearRange: [2014, 2020],
+                format: 'DD/MM/YYYY'
+            });
+
+        var picker = new Pikaday(
+            {
+                field: document.getElementById('ckOutDateTb'),
+                firstDay: 1,
+                minDate: new Date('2018-12-01'),
+                maxDate: new Date('2020-12-31'),
+                yearRange: [2018, 2020],
+                format: 'DD/MM/YYYY'
+            });
+    </script>

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ClientCheckout">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bookingIdFk" Type="int" Nullable="false" />
+    <Property Name="checkoutDate" Type="datetime2" Precision="7" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="checkInDate" Type="datetime2" Precision="7" />
+    <Property Name="status" Type="bit" />
+    <Property Name="createdDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="status" Type="bit" />
+    <Property Name="createDate" Type="datetime2" Precision="7" />
+  </EntityType>
+  <EntityType Name="StaffBooking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="roomId" Type="int" Nullable="false" />
+    <Property Name="customerId" Type="int" Nullable="false" />
+    <Property Name="status" Type="bit" />
+    <Property Name="checkInDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="checkOutDate" Type="datetime2" Precision="7" Nullable="false" />
+    <Property Name="lastUpdated" Type="datetime2" Precision="7" />
+  </EntityType>
+  <Association Name="FK_ConfirmClientBooking_ToTable">
+    <End Role="StaffBooking" Type="Self.StaffBooking" Multiplicity="1" />
+    <End Role="ClientCheckout" Type="Self.ClientCheckout" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="StaffBooking">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientCheckout">
+        <PropertyRef Name="bookingIdFk" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffBooking_Customer">
+    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+    <End Role="StaffBooking" Type="Self.StaffBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffBooking">
+        <PropertyRef Name="customerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_StaffBooking_Room">
+    <End Role="Room" Type="Self.Room" Multiplicity="1" />
+    <End Role="StaffBooking" Type="Self.StaffBooking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="StaffBooking">
+        <PropertyRef Name="roomId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DbModelStoreContainer">
+    <EntitySet Name="ClientCheckout" EntityType="Self.ClientCheckout" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="StaffBooking" EntityType="Self.StaffBooking" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ConfirmClientBooking_ToTable" Association="Self.FK_ConfirmClientBooking_ToTable">
+      <End Role="StaffBooking" EntitySet="StaffBooking" />
+      <End Role="ClientCheckout" EntitySet="ClientCheckout" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffBooking_Customer" Association="Self.FK_StaffBooking_Customer">
+      <End Role="Customer" EntitySet="Customer" />
+      <End Role="StaffBooking" EntitySet="StaffBooking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_StaffBooking_Room" Association="Self.FK_StaffBooking_Room">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="StaffBooking" EntitySet="StaffBooking" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

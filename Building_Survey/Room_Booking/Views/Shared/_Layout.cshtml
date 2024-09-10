@@ -1,0 +1,60 @@
+﻿@using Room_Booking.Helper
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - @App_Constants.APP_COMPANY_NAME</title>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Styles.Render("~/Content/css")
+    <script src="~/Scripts/pikaday/pikaday.js"></script>
+
+    <link href="~/Scripts/pikaday/pikaday.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/SitesExtraCSS.css" rel="stylesheet" />
+    <script>
+
+        $(document).ready(function () {
+            $("#errorMessage").hide();
+        });
+    </script>
+</head>
+<body>
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.Label(@App_Constants.APP_NAME, new { @class = "navbar-brand" })
+               
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Staff Bookings", "Index", "Bookings", null,new { @target = "StaffBooking" })</li>                                        
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+            @RenderBody()
+        
+            <div class="alert alert-danger" role="alert" id="errorMessage">
+                <h1>@ViewBag.ErrorMessage</h1>
+            </div>        
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - @App_Constants.APP_COMPANY_NAME - @App_Constants.APP_NAME </p>
+        </footer>
+    </div>
+
+
+        @RenderSection("scripts", required: false)
+</body>
+</html>

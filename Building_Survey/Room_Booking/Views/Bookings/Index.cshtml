@@ -1,0 +1,104 @@
+﻿@model IEnumerable<Room_Booking.ViewModel.BookingVM>
+
+@{
+    ViewBag.Title = "Booking Manager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+
+    @if(string.IsNullOrEmpty(@ViewBag.ErrorMessage))
+    {
+        @Html.ActionLink("Create New", "Create")
+    }
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.roomName)
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.customerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckInDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckOutDate)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.status)
+        </th>
+        <th>
+            Is Check Out
+        </th>
+        <th> Operations</th>
+        @*<th> Booking Status</th>
+        *@
+        <th>
+            Admin Area
+        </th>
+        <th></th>
+    </tr>
+    
+        @foreach (var item in Model)
+        {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.roomName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.customerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckInDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CheckOutDate)
+        </td>
+        <td>
+            @if (!item.status.HasValue)
+            {
+                @Html.Label("Unknown")
+            }
+            else
+            {
+                @HTMLHelperExtensions.ShowYesOrNot(item.status.Value)
+            }
+        </td>
+
+        <td>
+            @HTMLHelperExtensions.ShowYesOrNot(item.hasBeenCheckout)
+        </td>
+
+        
+
+
+        <td>
+            @if(item.status.HasValue)
+                {
+                if (!item.hasBeenCheckout)
+                {
+                    @Html.ActionLink("Cancel Booking", "Delete", new { id = item.Id })
+
+                    @Html.ActionLink(" | Customer Checkout", "ClientCheckout", "Checkout", new { bookingId = item.Id }, null)
+                }
+            }
+        <td>
+        
+               @Html.ActionLink("Edit |", "Edit", new { id = item.Id })
+        
+               @Html.ActionLink("Details", "Details", new { id = item.Id })
+
+            
+            </td>
+    </tr>
+        }
+   
+
+</table>
