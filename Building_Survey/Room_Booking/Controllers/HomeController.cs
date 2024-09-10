@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+// what is going on? 
 namespace Room_Booking.Controllers
 {
     public class HomeController : Controller
